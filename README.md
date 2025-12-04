@@ -16,24 +16,6 @@
 
 
 
-<!-- <p align="center">
-  <a href="./">
-    <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg">
-  </a>
-  <a href="https://yuemingpan.github.io/SFD.github.io/">
-    <img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg">
-  </a>
-  <a href="https://huggingface.co/YuemingPan/SFD">
-    <img src="https://img.shields.io/badge/🤗-Model-blue.svg">
-  </a>
-</p>
-
-<div align="center">
-
-[![NeurIPS 2025](https://img.shields.io/badge/NeurIPS-2025-blue.svg)](https://neurips.cc/)
-[![arXiv](https://img.shields.io/badge/arXiv-2511.22549-b31b1b.svg)](https://arxiv.org/abs/2511.22549)
-
-</div> -->
 <p align="center">
   <a href="https://arxiv.org/abs/2512.04926"><img src="https://img.shields.io/badge/arXiv-2512.04926-b31b1b.svg"></a>
   <a href="https://yuemingpan.github.io/SFD.github.io/"><img src="https://img.shields.io/badge/Project-Page-green.svg"></a>
