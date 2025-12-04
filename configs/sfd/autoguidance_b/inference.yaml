@@ -1,4 +1,4 @@
-ckpt_path: 'outputs/train/autoguidance_lightningdit_b_sdvae_f16d32_semvaebasech16kl1e-7_svnorm_semfirst_repabase_400k_lr1e-4_beta0p999/checkpoints/0400000.pt' # not used for train
+ckpt_path: 'outputs/train/sfd_autoguidance_b/checkpoints/0070000.pt' # not used for train
 
 data:
   data_path: 'outputs/dataset/imagenet1k-latents/sdvae_f16d32_semvaebasech16_repadinov2_vitb14_reg/imagenet_train_256'

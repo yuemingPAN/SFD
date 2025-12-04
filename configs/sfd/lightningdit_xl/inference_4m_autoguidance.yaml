@@ -74,4 +74,4 @@ sample:
   balanced_sampling: true
 
   autoguidance: true
-  autoguidance_config: 'configs/autoguidance/inference.yaml'
+  autoguidance_config: 'configs/sfd/autoguidance_b/inference.yaml'

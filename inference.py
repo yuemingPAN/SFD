@@ -221,7 +221,8 @@ def do_sample(train_config, accelerator, ckpt_path=None, cfg_scale=None, cfg_int
         if demo_sample_mode:
             cfg_interval_start = 0
             timestep_shift = 0
-            cfg_scale = 9.0
+            cfg_scale = 1.5
+            effective_cfg_sem = effective_cfg_tex = cfg_scale
 
         sample_folder_dir = os.path.join(train_config['train']['output_dir'], train_config['train']['exp_name'], folder_name)
         if accelerator.process_index == 0:
@@ -426,7 +427,7 @@ def do_sample(train_config, accelerator, ckpt_path=None, cfg_scale=None, cfg_int
         num_samples = len([name for name in os.listdir(sample_folder_dir) if (os.path.isfile(os.path.join(sample_folder_dir, name)) and ".png" in name)])
         total_samples = int(math.ceil(train_config['sample']['fid_num'] / global_batch_size) * global_batch_size)
         if rank == 0:
-            if accelerator.process_index == 0:
+            if accelerator.process_index == 0 and not demo_sample_mode:
                 print_with_prefix(f"Total number of images that will be sampled: {total_samples}")
         assert total_samples % accelerator.num_processes == 0, "total_samples must be divisible by world_size"
         samples_needed_this_gpu = int(total_samples // accelerator.num_processes)
@@ -495,7 +496,7 @@ def do_sample(train_config, accelerator, ckpt_path=None, cfg_scale=None, cfg_int
         if demo_sample_mode:
             if accelerator.process_index == 0:
                 images = []
-                for label in tqdm([975, 3, 207, 387, 388, 88, 979, 279], desc="Generating Demo Samples"):
+                for label in tqdm([36, 22, 279, 975, 388, 15, 1, 979], desc="Generating Demo Samples"):
                     z = torch.randn(1, model.in_channels, latent_size, latent_size, device=device)
                     y = torch.tensor([label], device=device)
 
@@ -531,6 +532,7 @@ def do_sample(train_config, accelerator, ckpt_path=None, cfg_scale=None, cfg_int
 
                 # Save the combined image
                 Image.fromarray(grid).save('demo_images/demo_samples.png')
+                print_with_prefix(f"Demo samples saved to demo_images/demo_samples.png")
 
                 return None
         else:
