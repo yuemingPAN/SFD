@@ -1,8 +1,74 @@
-# TODO List
-- [x] Inference code and model weights.
-- [ ] Train code of SemVAE and diffusion model (SFD).
+<h1 align="center"> Semantics Lead the Way: Harmonizing Semantic and Texture Modeling with Asynchronous Latent Diffusion</h1>
 
-# Prepare Environments
+<p align="center">
+<strong>Yueming Pan<sup>1,2‡</sup></strong>, <strong>Ruoyu Feng<sup>3‡</sup></strong>, <strong>Qi Dai<sup>2</sup></strong>, <strong>Yuqi Wang<sup>3</sup></strong>, <strong>Wenfeng Lin<sup>3</sup></strong>, <strong>Mingyu Guo<sup>3</sup></strong>, <strong>Chong Luo<sup>2†</sup></strong>, <strong>Nanning Zheng<sup>1†</sup></strong>
+
+</p>
+
+<p align="center">
+¹IAIR, Xi’an Jiaotong University ²Microsoft Research Asia ³ByteDance  
+</p>
+
+<p align="center">
+‡ <i>Equal contribution</i> † <i>Corresponding author</i>
+</p>
+
+
+
+<p align="center">
+  <a href="./">
+  <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg?style=flat-square">
+  </a>
+  <a href="https://yuemingpan.github.io/SFD.github.io/"><img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg?style=flat-square"></a>
+  <a href="https://huggingface.co/YuemingPan/SFD"><img src="https://img.shields.io/badge/🤗-Model-blue.svg?style=flat-square"></a>
+</p>
+
+
+<p align="center">
+  <img src="images/demo_Sample.png" width="85%">
+</p>
+
+
+## 🚩 Overview
+
+<p align="center">
+  <img src="images/teaser_v5.png" width="90%">
+</p>
+
+Latent Diffusion Models (LDMs) inherently follow a coarse-to-fine generation process, where high-level semantic structure is generated slightly earlier than fine-grained texture. This indicates the preceding semantics potentially benefit the texture generation by providing a semantic anchor. Recent advances have integrated semantic priors from pretrained visual encoders to further enhance LDMs, yet they still denoise semantic and VAE-encoded texture synchronously, neglecting such ordering. 
+
+Observing these, we propose **Semantic-First Diffusion (SFD)**, a latent diffusion paradigm that explicitly prioritizes semantic formation. SFD first constructs composite latents by combining the compact semantic latent, which is extracted from pretrained visual encoder via a dedicated **Semantic VAE**, with the texture latent. The core of SFD is to denoise the semantic and texture latents **asynchronously** using separate noise schedules: semantics precede textures by a temporal offset, providing clearer high-level guidance for texture refinement and enabling natural coarse-to-fine generation. 
+During denoising, SFD operates in three phases: 
+<span style="color:#d62728;">Stage I – Semantic initialization</span>, where semantic latents denoise first;
+<span style="color:rgb(68,114,196);">Stage II – Asynchronous generation</span>, where semantics and textures denoise jointly but asynchronously, with semantics ahead of textures;
+<span style="color:#2ca02c;">Stage III – Texture completion</span>, where only textures continue refining.
+After denoising, the generated semantic latent $\mathbf{s}_1$ is discarded, and the final image is decoded solely from the texture latent $\mathbf{z}_1$.
+
+On ImageNet 256×256, **Semantic-First Diffusion (SFD)** demonstrates both superior quality and remarkable convergence acceleration.  SFD achieves state-of-the-art **FID 1.06** (LightningDiT-XL) and **FID 1.04** (1.0B LightningDiT-XXL), while exhibiting approximately **100×** and **33.3×** faster training convergence compared to **DiT** and **LightningDiT**, respectively.  Furthermore, incorporating SFD into existing frameworks such as **ReDi** and **VA-VAE** consistently yields additional improvements, validating the effectiveness of asynchronous, semantics-led modeling.
+
+## 🗞️ News
+
+- **[2025.12.05]** Released inference code and pre-trained model weights of SFD (LightningDiT-XL and LightningDiT-XXL) on ImageNet 256×256. 
+
+## 🛠️ To-Do List
+
+- [x] **Inference code and model weights**
+- [ ] **Training code of Semantic VAE and diffusion model (SFD)**
+
+## 🧾 Results
+
+- On ImageNet 256×256 with guidance, **SFD** achieves **FID 1.06** (LightningDiT-XL) and **FID 1.04** (1.0B LightningDiT-XXL).  
+- **100×** and **33.3×** faster training convergence compared to DiT and LightningDiT, respectively.
+
+<p align="center">
+  <img src="images/tabel.png" width="90%">
+</p>
+
+
+
+## 🎯 Usage
+
+### 1. Prepare Environments
 ```bash
 conda create -n sfd python=3.10.12
 conda activate sfd
@@ -14,7 +80,7 @@ pip install tensorflow==2.8.0
 sed -i 's/dtype=np\.bool)/dtype=np.bool_)/g' guided-diffusion/evaluations/evaluator.py  # or will encounter the error: "AttributeError: module 'numpy' has no attribute 'bool'".
 ```
 
-# Prepare Model Weights
+### 2. Prepare Model Weights
 ```bash
 # Prepare the decoder of SD-VAE
 mkdir -p outputs/model_weights/va-vae-imagenet256-experimental-variants
@@ -45,8 +111,8 @@ rm -rf temp
 # or you can directly download the checkpoints from huggingface: https://huggingface.co/SFD-Project/SFD. Put the files in model_weights/ of SFD-Project/SFD to outputs/train
 ```
 
-# Inference and Evaluation
-## Inference demo
+### 3. Inference
+**Inference demo**
 ```bash
 PRECISION=bf16 bash run_fast_inference.sh $INFERENCE_CONFIG
 # take XL model (675M) as an example. 
@@ -55,8 +121,12 @@ AUTOGUIDANCE_MODEL_SIZE="b" \
 AUTOGUIDANCE_CKPT_ITER="70" \
 PRECISION=bf16 bash run_fast_inference.sh configs/sfd/lightningdit_xl/inference_4m_autoguidance_demo.yaml
 ```
+Images will be saved into demo_images/demo_samples.png, e.g. the following one:
+<p align="center">
+  <img src="demo_images/demo_samples.png" width="90%">
+</p>
 
-## Inference on ImageNet 256x256
+**Inference on ImageNet 256x256**
 
 For w/o Guidance, run the following command:
 ```bash
@@ -100,7 +170,7 @@ More inference configs can be found in `configs/sfd/lightningdit_xl` and `config
 | LightningDiT-XXL | 800 | 1.0B | LightningDiT-B | 120K | 1.5 |
 
 
-## Evaluation
+### 4.  Evaluation
 ```bash
 # get final scores via guided-diffusion's evaluation tools
 bash run_eval_via_guided_diffusion.sh $OUTPUT_IMAGES_DIR
@@ -125,3 +195,23 @@ Note that our models were trained and evaluated on NPUs (consistent with the res
 | SFD (XL) | 800 | 675M | 1.06 | 1.03 |
 | SFD (XXL) | 80 | 1.0B | 1.19 | 1.20 |
 | SFD (XXL) | 800 | 1.0B | 1.04 | 1.04 |
+
+
+## Acknowledgements
+
+Our code is based on [LightningDiT](https://github.com/hustvl/LightningDiT) and [REPA](https://github.com/sihyun-yu/REPA) repositories.  We sincerely thank the authors for releasing their code.  
+
+
+<!-- ## 🔗 Citation
+
+If you find our work, this repository, or pretrained models useful, please consider giving a star ⭐ and citing:
+
+```bibtex
+@article{Pan2025SFD,
+  title={Semantics Lead the Way: Harmonizing Semantic and Texture Modeling with Asynchronous Latent    Diffusion},
+  author={Pan, Yueming and Feng, Ruoyu and Dai, Qi and Wang, Yuqi and Lin, Wenfeng and Guo, Mingyu and Luo, Chong and Zheng, Nanning},
+  journal={arXiv preprint arXiv:2504.16064},
+  year={2025}
+} -->
+
+
