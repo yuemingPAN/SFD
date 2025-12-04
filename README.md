@@ -84,7 +84,7 @@ Explicitly **leading semantics ahead of textures with a moderate offset (Δt = 0
   <img src="images/fid_vs_delta_t.png" width="55%">
 </p>
 
----
+___
 
 - On ImageNet 256×256, **SFD** achieves **FID 1.06** (LightningDiT-XL) and **FID 1.04** (1.0B LightningDiT-XXL).  
 - **100×** and **33.3×** faster training convergence compared to DiT and LightningDiT, respectively.
