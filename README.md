@@ -18,10 +18,14 @@
 
 <p align="center">
   <a href="./">
-  <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg?style=flat-square">
+    <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg?style=for-the-badge">
   </a>
-  <a href="https://yuemingpan.github.io/SFD.github.io/"><img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg?style=flat-square"></a>
-  <a href="https://huggingface.co/YuemingPan/SFD"><img src="https://img.shields.io/badge/🤗-Model-blue.svg?style=flat-square"></a>
+  <a href="https://yuemingpan.github.io/SFD.github.io/">
+    <img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg?style=for-the-badge">
+  </a>
+  <a href="https://huggingface.co/YuemingPan/SFD">
+    <img src="https://img.shields.io/badge/🤗-Model-blue.svg?style=for-the-badge">
+  </a>
 </p>
 
 
@@ -54,7 +58,7 @@ On ImageNet 256×256, **SFD** demonstrates both superior quality and remarkable 
 ## 🛠️ To-Do List
 
 - [x] Inference code and model weights
-- [ ] Training code of Semantic VAE and diffusion model (SFD) at different scales
+- [ ] Training code of Semantic VAE and diffusion model (SFD)
 
 ## 🧾 Results
 
