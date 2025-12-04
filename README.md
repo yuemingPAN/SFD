@@ -18,13 +18,13 @@
 
 <p align="center">
   <a href="./">
-    <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg?style=for-the-badge">
+    <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg">
   </a>
   <a href="https://yuemingpan.github.io/SFD.github.io/">
-    <img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg?style=for-the-badge">
+    <img src="https://img.shields.io/badge/🌐-Project%20Page-green.svg">
   </a>
   <a href="https://huggingface.co/YuemingPan/SFD">
-    <img src="https://img.shields.io/badge/🤗-Model-blue.svg?style=for-the-badge">
+    <img src="https://img.shields.io/badge/🤗-Model-blue.svg">
   </a>
 </p>
 
