@@ -115,4 +115,3 @@ Note that our models were trained and evaluated on NPUs (consistent with the res
 | SFD (XL) | 800 | 675M | 1.06 | 1.03 |
 | SFD (XXL) | 80 | 1.0B | 1.19 | 1.20 |
 | SFD (XXL) | 800 | 1.0B | 1.04 | 1.04 |
-
