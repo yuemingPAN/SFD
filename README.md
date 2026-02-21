@@ -52,7 +52,7 @@ After denoising, only the texture latent is decoded for the final image.
 On ImageNet 256×256, **SFD** demonstrates both superior quality and remarkable convergence acceleration.  SFD achieves state-of-the-art **FID 1.06** (LightningDiT-XL) and **FID 1.04** (1.0B LightningDiT-XXL), while exhibiting approximately **100×** and **33.3×** faster training convergence compared to **DiT** and **LightningDiT**, respectively. SFD also improves existing methods like ReDi and VA-VAE, demonstrating the effectiveness of asynchronous, semantics-led modeling.
 
 ## 🗞️ News
-- **[2026.02.21]**  FlashPortrait is accepted by CVPR2026🎉🎉🎉.
+- **[2026.02.21]** SFD is accepted by CVPR2026🎉🎉🎉.
 - **[2025.12.05]** Released inference code and pre-trained model weights of SFD on ImageNet 256×256. 
 - **[2025.12.21]** Released training code of Semantic VAE and diffusion model (SFD).
 
